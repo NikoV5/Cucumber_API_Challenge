@@ -6,6 +6,10 @@ const {
 const {
   createEsbuildPlugin,
 } = require("@badeball/cypress-cucumber-preprocessor/esbuild");
+const dotenv = require('dotenv');
+
+// Load the environment variables from the .env file
+dotenv.config();
 
 async function setupNodeEvents(on, config) {
   // This is required for the preprocessor to be able to generate JSON reports after each run, and more,
@@ -26,5 +30,9 @@ module.exports = defineConfig({
   e2e: {
     specPattern: "**/*.feature",
     setupNodeEvents,
+    baseUrl: process.env.BASE_URL,
+    env: {
+      bookingEndpoint: process.env.BOOKING_ENDPOINT,
+    },
   },
 });
